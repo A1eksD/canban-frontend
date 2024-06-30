@@ -1,1 +1,18 @@
-<p>login works!</p>
+<section>
+    <form (ngSubmit)="login()">
+        <mat-form-field class="example-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Enter your name"  [(ngModel)]="userName" required name="userName" type="text">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Enter your password"  [(ngModel)]="password" required name="password" type="password">
+        </mat-form-field>
+    
+        <div class="example-button-row">
+            <button mat-raised-button>Login</button>
+            <button mat-raised-button routerLink="/register">Register</button>
+        </div>
+    </form>
+</section>
+  
