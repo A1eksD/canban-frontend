@@ -1,0 +1,19 @@
+section{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin: 20px;
+}
+
+mat-button-toggle-group{
+    width: calc(100% - 40px);
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.buttonBox{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}

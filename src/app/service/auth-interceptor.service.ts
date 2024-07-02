@@ -1,6 +1,6 @@
-import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -10,10 +10,10 @@ export class AuthInterceptorService implements HttpInterceptor {
 
   constructor(private router: Router) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): any {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>>  {
     const authToken = localStorage.getItem('token');
-
-    if (authToken) {
+    debugger;
+    if (authToken && !req.url.endsWith('/register/')) {
       req = req.clone({
         setHeaders: {
           Authorization: `Token ${authToken}`
@@ -27,6 +27,8 @@ export class AuthInterceptorService implements HttpInterceptor {
           if (err.status === 401) {
             console.error('Unauthorized request:', err);
             this.router.navigateByUrl('/login');
+          }else if (err.status === 403) {
+            console.error('Forbidden request:', err);
           }
         }
         return throwError(() => err);

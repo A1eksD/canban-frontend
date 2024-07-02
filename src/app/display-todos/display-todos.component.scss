@@ -1,0 +1,14 @@
+section{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    app-create-todos{
+        width: 32%;
+        height: 100%;
+    }
+    app-show-todos{
+        width: 68%;
+        background-color:cadetblue;
+        height: 100%;
+    }
+}

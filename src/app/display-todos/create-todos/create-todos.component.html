@@ -1,1 +1,52 @@
-<p>create-todos works!</p>
+<section>
+    <!------title--------->
+    <mat-form-field>
+        <mat-label>Title(requiret)</mat-label>
+        <input matInput [(ngModel)]="title" maxlength="80">
+    </mat-form-field>
+
+    <!------description--------->
+    <mat-form-field>
+        <mat-label>Description(requiret)</mat-label>
+        <textarea matInput [(ngModel)]="description" maxlength="220"></textarea>
+    </mat-form-field>
+
+    <!------prio btn--------->
+    <mat-button-toggle-group
+        name="favoriteColor"
+        aria-label="Favorite Color"
+        [hideSingleSelectionIndicator]="hideSingleSelectionIndicator()"
+    >
+        <mat-button-toggle value="red" click="checkPrio(1)">Low</mat-button-toggle>
+        <mat-button-toggle value="green" click="checkPrio(2)">Medium</mat-button-toggle>
+        <mat-button-toggle value="blue" click="checkPrio(3)">Heigh</mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <!------select users--------->
+    <mat-form-field>
+        <mat-label>Select Users</mat-label>
+        <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <!------subtasks--------->
+    <mat-form-field>
+        <mat-label>Subtasks</mat-label>
+        <input matInput (keypress)="addSubtask($event)" [(ngModel)]="subtasksValue" maxlength="100">
+    </mat-form-field>
+    <ul>
+        @for (item of subtasks; track $index) {
+            <li>
+                {{ item }}  <button mat-raised-button (click)="deleteSubtask($index)">Delete</button>
+                <mat-divider></mat-divider>
+            </li>
+        }
+    </ul>
+
+    <div class="buttonBox">
+        <button mat-raised-button (click)="clearValues()">Clear</button>
+        <button mat-raised-button (click)="saveTask()">Save</button>
+    </div>
+</section>

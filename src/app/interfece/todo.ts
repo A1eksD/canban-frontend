@@ -1,9 +1,8 @@
 export interface Todo {
-    created: string,
     title: string,
     description: string,
-    creator: [],
+    creator: number,
     priority: number,
-    assigned_users: [],
-    subtasks: []
+    assigned_users: number[] | [];
+    subtasks: string[] | [];
 }

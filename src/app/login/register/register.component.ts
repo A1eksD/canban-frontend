@@ -54,20 +54,22 @@ export class RegisterComponent {
 
   constructor(private urlService: UrlService, private router: Router, private http: HttpClient) {}
 
-  async register(){
+
+  async register() {
     if (this.checkValues()) {
-      const url = `${environment.baseUrl}/tasks/`;
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      let user = this.getUserData();
-      const body = JSON.stringify(user);
-      try {
-        await lastValueFrom(this.http.post(url, body));
-        this.router.navigateByUrl('/todos/')
-      } catch (e) {
-        console.log('fehler beim registrieren', e); 
-      }
+        const url = 'http://127.0.0.1:8000/register/';
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+        let user = this.getUserData();
+        const body = JSON.stringify(user);
+        try {
+            await lastValueFrom(this.http.post(url, body, { headers }));
+            this.router.navigateByUrl('/todos');
+        } catch (e) {
+            console.log('Fehler beim Registrieren', e);
+        }
     }
-  }
+}
+
 
   checkValues(){
     return this.userName.length > 3 && this.userEmail.length > 3 && 
