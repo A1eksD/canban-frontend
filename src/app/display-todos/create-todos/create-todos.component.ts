@@ -56,9 +56,7 @@ export class CreateTodosComponent {
 
   addSubtask(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       const subtask_Value = {
-        "id": id,
         "name": this.subtasksValue,
         "is_checked": false,
       }
@@ -81,6 +79,7 @@ export class CreateTodosComponent {
       creator: +localStorage.getItem('userID')!,
       subtasks: this.subtasks || [],
       assigned_users: this.assigned_users || [],
+      category: 'todo'
     };
     try {
       await this.UrlService.addTaskIntoBackend(task);

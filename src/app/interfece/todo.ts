@@ -5,4 +5,5 @@ export interface Todo {
     priority: number,
     assigned_users: number[] | [];
     subtasks: string[] | [];
+    category: string
 }
