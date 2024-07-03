@@ -76,8 +76,8 @@ export class RegisterComponent {
 
 
   checkValues(){
-    return this.userName.length > 3 && this.userEmail.length > 3 && 
-      this.password1.length > 3 && this.password1.length > 3 && 
+    return this.userName.length >= 3 && this.userEmail.length > 3 && 
+      this.password1.length >= 3 && this.password1.length >= 3 && 
       this.password1 === this.password2;
   }
 
