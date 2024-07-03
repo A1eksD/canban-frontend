@@ -37,7 +37,7 @@ export class CreateTodosComponent {
   priority: number = 1;
   creator: number = 1;
   subtasksValue: string = '';
-  subtasks: string[] = [];
+  subtasks: any[] = [];
   assigned_users = [];
 
   constructor(private UrlService: UrlService) {}
@@ -56,7 +56,13 @@ export class CreateTodosComponent {
 
   addSubtask(event: KeyboardEvent) {
     if (event.key === 'Enter') {
-      this.subtasks.push(this.subtasksValue);
+      const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      const subtask_Value = {
+        "id": id,
+        "name": this.subtasksValue,
+        "is_checked": false,
+      }
+      this.subtasks.push(subtask_Value);
       this.subtasksValue = '';
     }
   }
@@ -66,6 +72,7 @@ export class CreateTodosComponent {
   }
 
   async saveTask() {
+
     const task = {
       created: this.getDate(),
       title: this.title,
@@ -76,8 +83,8 @@ export class CreateTodosComponent {
       assigned_users: this.assigned_users || [],
     };
     try {
-      const response = await this.UrlService.addTaskIntoBackend(task);
-      console.log(response);
+      await this.UrlService.addTaskIntoBackend(task);
+      console.log('Task created successful');
     } catch (error) {
       console.error(error);
     }

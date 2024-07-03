@@ -39,7 +39,7 @@
     <ul>
         @for (item of subtasks; track $index) {
             <li>
-                {{ item }}  <button mat-raised-button (click)="deleteSubtask($index)">Delete</button>
+                {{ item.name }}  <button mat-raised-button (click)="deleteSubtask($index)">Delete</button>
                 <mat-divider></mat-divider>
             </li>
         }

@@ -15,6 +15,7 @@ import { registerUser } from '../../interfece/register-user';
 import { lastValueFrom } from 'rxjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { UserToken } from '../../interfece/user-token';
 
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -62,8 +63,11 @@ export class RegisterComponent {
         let user = this.getUserData();
         const body = JSON.stringify(user);
         try {
-            await lastValueFrom(this.http.post(url, body, { headers }));
-            this.router.navigateByUrl('/todos');
+          let response = (await lastValueFrom(this.http.post(url, body, { headers })))as UserToken;
+          if (response) {
+            localStorage.setItem('token', response.token);
+          }
+          this.router.navigateByUrl('/todos');
         } catch (e) {
             console.log('Fehler beim Registrieren', e);
         }
@@ -80,7 +84,7 @@ export class RegisterComponent {
 
   getUserData(): registerUser {
     return {
-      name: this.userName,
+      username: this.userName,
       email: this.userEmail,
       password: this.password1
     };

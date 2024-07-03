@@ -25,8 +25,14 @@ export class UrlService {
 
   async addTaskIntoBackend(task: Todo){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const body = JSON.stringify(task);
+    // const body = JSON.stringify(task);
     const url = 'http://127.0.0.1:8000/tasks/';
-    await lastValueFrom(this.http.post(url, body, { headers }));
+    await lastValueFrom(this.http.post(url, task, { headers }));
+  }
+  async addSubtaskIntoBackend(subtask: any){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    // const body = JSON.stringify(subtask);
+    const url = 'http://127.0.0.1:8000/subtasks/';
+    await lastValueFrom(this.http.post(url, subtask, { headers }));
   }
 }
