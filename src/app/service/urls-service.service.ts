@@ -10,16 +10,11 @@ import { fetchedUser } from '../interfece/fetchedUser';
 })
 export class UrlService {
 
-  private baseUrl  = 'http://127.0.0.1:8000/admin/auth/user/';
-  users: fetchedUser[] = [];
+  userNames: string[] = [];
 
   currentLoggedInUserID: number = 0;
 
-  constructor(private http: HttpClient) { 
-    setInterval(() => {
-      console.log(this.users);
-    }, 2000)
-  }
+  constructor(private http: HttpClient) {}
   
   loginWithUsernameAndPassword(userName:string, password:string){
     
@@ -31,12 +26,15 @@ export class UrlService {
     return lastValueFrom(this.http.post(url, body));
   }
 
+
   async addTaskIntoBackend(task: Todo){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     // const body = JSON.stringify(task);
     const url = 'http://127.0.0.1:8000/tasks/';
     await lastValueFrom(this.http.post(url, task, { headers }));
   }
+
+
   async addSubtaskIntoBackend(subtask: any){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     // const body = JSON.stringify(subtask);
@@ -45,12 +43,12 @@ export class UrlService {
   }
 
 
-  startFetshingUsers(){
-    return this.http.get<fetchedUser[]>(this.baseUrl).pipe(
-      map(data => {
-        this.users = data;
-        return this.users;
-      })
-    );
+  async fetchUsers() {
+    const url = 'http://127.0.0.1:8000/api/public_users/';
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    this.userNames = jsonData.map((user: any) => user.username);
   }
+  
+  
 }
