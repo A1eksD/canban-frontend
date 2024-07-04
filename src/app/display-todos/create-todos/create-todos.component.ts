@@ -40,7 +40,7 @@ export class CreateTodosComponent {
   subtasks: any[] = [];
   assigned_users = [];
 
-  constructor(private UrlService: UrlService) {}
+  constructor(public UrlService: UrlService) {}
 
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update((value) => !value);
