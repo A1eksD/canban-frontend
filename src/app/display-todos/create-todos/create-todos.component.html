@@ -23,11 +23,18 @@
     </mat-button-toggle-group>
 
     <!------select users--------->
+    <div>
+        <ul class="userList">
+            @for (user of assigned_users; track $index) {
+                <li>{{user.username}} <button mat-raised-button (click)="deleteSelectedUser($index)">Delete user</button></li>
+            }
+        </ul>
+    </div>
     <mat-form-field>
         <mat-label>Select Users</mat-label>
         <mat-select>
-            @for (userName of UrlService.userNames; track $index) {
-                <mat-option>{{userName}}</mat-option>
+            @for (user of UrlService.userNames; track $index) {
+                <mat-option (click)="selectUser(user)">{{user.username}}</mat-option>
             }
         </mat-select>
     </mat-form-field>

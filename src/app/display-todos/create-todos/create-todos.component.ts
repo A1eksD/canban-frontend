@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { UrlService } from '../../service/urls-service.service';
+import { fetchedUser } from '../../interfece/fetchedUser';
 
 @Component({
   selector: 'app-create-todos',
@@ -38,21 +39,25 @@ export class CreateTodosComponent {
   creator: number = 1;
   subtasksValue: string = '';
   subtasks: any[] = [];
-  assigned_users = [];
+  assigned_users : fetchedUser[]= [];
 
   constructor(public UrlService: UrlService) {}
+
 
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update((value) => !value);
   }
 
+
   toggleMultipleSelectionIndicator() {
     this.hideMultipleSelectionIndicator.update((value) => !value);
   }
 
+
   checkPrio(number: number) {
     this.priority = number;
   }
+
 
   addSubtask(event: KeyboardEvent) {
     if (event.key === 'Enter') {
@@ -65,9 +70,11 @@ export class CreateTodosComponent {
     }
   }
 
+
   deleteSubtask(index: number) {
     this.subtasks.splice(index, 1);
   }
+
 
   async saveTask() {
 
@@ -89,6 +96,7 @@ export class CreateTodosComponent {
     }
     this.clearValues();
   }
+
 
   getDate() {
     // const myDate = new Date();
@@ -114,6 +122,7 @@ export class CreateTodosComponent {
     return `${formatierterJahr}-${formatierterMonat}-${formatierterTag}T${formatierteStunden}:${formatierteMinuten}:${formatierteSekunden}.${formatierteMillisekunden}Z`;
   }
 
+
   clearValues() {
     this.created = '';
     this.title = '';
@@ -123,5 +132,18 @@ export class CreateTodosComponent {
     this.subtasksValue = '';
     this.subtasks = [];
     this.assigned_users = [];
+  }
+
+
+  selectUser(user: fetchedUser){
+    const isUserChacked = this.assigned_users.some(u => u.id === user.id);
+    if(!isUserChacked){
+      this.assigned_users.push(user);
+    }
+  }
+
+  
+  deleteSelectedUser(index:number){
+    this.assigned_users.splice(index, 1);
   }
 }

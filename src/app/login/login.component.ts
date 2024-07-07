@@ -46,7 +46,7 @@ export class LoginComponent {
         localStorage.setItem('token', response.token);
         localStorage.setItem('userID', response.user_id.toString());
       }
-      this.urlService.fetchUsers();
+      this.urlService.startFetchData();
       this.router.navigateByUrl('/todos');
     } catch (e) {
       console.error('error', e);

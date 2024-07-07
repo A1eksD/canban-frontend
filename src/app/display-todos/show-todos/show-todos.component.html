@@ -1,1 +1,104 @@
-<p>show-todos works!</p>
+<section>
+    <div class="droppBoxes">
+        <div class="dragRow">
+          <div class="headerOfBar">
+            <h1>To do</h1>
+          </div>
+          <div class="dragAreaBox">
+            <div
+              appOnDragHighlight  id="toDo" #todoArea class="dragArea"
+              (drop)="moveTo('toDo')" (dragleave)="removeHighlight('toDo')" (dragover)="allowDrop($event); highlight('toDo')">
+              @if( filterExistingTask() ){
+                @if(getToDOCategory()){
+                  @for (item of toDoCategory; track $index;) {
+                    <app-card-details (dragstart)="startDragging(item.id)" draggable="true"
+                        [title]="item.title"
+                        [description]="item.description"
+                        [category]="item.category"
+                        [priority]="getPrio(item.priority)"
+                        [assigned_users]="item.assigned_users"
+                        [subtasks]="item.subtasks"
+                    ></app-card-details>
+                  } 
+                }
+              } 
+            </div>
+          </div>  
+        </div>
+        <div class="dragRow">
+          <div class="headerOfBar">
+            <h1>In progress</h1>
+          </div>
+          <div class="dragAreaBox">
+            <div
+              appOnDragHighlight class="dragArea" id="inProgress" #inProgressArea
+              (drop)="moveTo('inProgress')" (dragleave)="removeHighlight('inProgress')" (dragover)="allowDrop($event); highlight('inProgress')">
+              @if( filterExistingTask() ){
+                @if(getInProgressCategory()){ 
+                  @for (item of inProgressCategory; track $index;) {
+                    <app-card-details (dragstart)="startDragging(item.id)" draggable="true"
+                        [title]="item.title"
+                        [description]="item.description"
+                        [category]="item.category"
+                        [priority]="getPrio(item.priority)"
+                        [assigned_users]="item.assigned_users"
+                        [subtasks]="item.subtasks"
+                    ></app-card-details>          
+                  }
+                }
+              } 
+            </div>
+          </div>
+        </div>
+        <div class="dragRow">
+          <div class="headerOfBar">
+            <h1>Await feedback</h1>
+          </div>
+          <div class="dragAreaBox">
+            <div
+            appOnDragHighlight class="dragArea" id="awaitFeedback" #awaitFeedbackArea
+            (drop)="moveTo('awaitFeedback')" (dragleave)="removeHighlight('awaitFeedback')" (dragover)="allowDrop($event); highlight('awaitFeedback')">
+            @if( filterExistingTask() ){
+              @if(getAwaitFeedbackCategory()){ 
+                @for (item of awaitFeedbackCategory; track $index;) {
+                  <app-card-details (dragstart)="startDragging(item.id)" draggable="true" 
+                    [title]="item.title"
+                    [description]="item.description"
+                    [category]="item.category"
+                    [priority]="getPrio(item.priority)"
+                    [assigned_users]="item.assigned_users"
+                    [subtasks]="item.subtasks"
+                    ></app-card-details>            
+                }
+              }
+            } 
+          </div>
+          </div>
+        </div>
+        <div class="dragRow paddingBottom">
+          <div class="headerOfBar">
+            <h1>Done</h1>
+          </div>
+          <div class="dragAreaBox">
+            <div
+            appOnDragHighlight class="dragArea" id="done" #doneArea
+            (drop)="moveTo('done')" (dragleave)="removeHighlight('done')" (dragover)="allowDrop($event); highlight('done')">
+            @if( filterExistingTask() ){
+              @if(getDoneategory()){ 
+                @for (item of doneCategory; track $index;) {
+                  <app-card-details (dragstart)="startDragging(item.id)" draggable="true" 
+                    [title]="item.title"
+                    [description]="item.description"
+                    [category]="item.category"
+                    [priority]="getPrio(item.priority)"
+                    [assigned_users]="item.assigned_users"
+                    [subtasks]="item.subtasks"
+                    ></app-card-details>
+                }
+              }
+            } 
+          </div>
+          </div>
+        </div>
+      </div>
+</section>

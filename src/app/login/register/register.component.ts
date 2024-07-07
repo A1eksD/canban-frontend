@@ -67,7 +67,7 @@ export class RegisterComponent {
           if (response) {
             localStorage.setItem('token', response.token);
           }
-          this.urlService.fetchUsers();
+          this.urlService.startFetchData();
           this.router.navigateByUrl('/todos');
         } catch (e) {
             console.log('Fehler beim Registrieren', e);

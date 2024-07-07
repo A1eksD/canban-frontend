@@ -1,4 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.dBlock {
+  display: block;
+}
+
+.dNone {
+  display: none;
+}
+
+.dragAreaHighlight {
+  background-color: rgba(0, 0, 0, 0.096) !important;
+}
+
+@mixin displayFlex($d: flex, $j: center, $a: center, $g: 0) {
+  display: $d;
+  justify-content: $j;
+  align-items: $a;
+  gap: $g;
+}

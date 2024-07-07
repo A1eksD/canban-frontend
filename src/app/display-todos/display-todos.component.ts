@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
+import { UrlService } from '../service/urls-service.service';
 
 @Component({
   selector: 'app-display-todos',
@@ -16,7 +17,9 @@ import { catchError, throwError } from 'rxjs';
 })
 export class DisplayTodosComponent {
 
-  constructor(private http: HttpClient, private router: Router){}
+  constructor(private http: HttpClient, private router: Router, private urlService: UrlService){}
+
+  
   logout(){
     this.http
     .post('http://127.0.0.1:8000/logout/', {})
