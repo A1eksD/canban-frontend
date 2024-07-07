@@ -7,7 +7,7 @@
         <span>Assigned Users:</span>
         <ul>
             @for (item of urlService.currentTask.assigned_users; track $index) {
-                <li><b>{{ item }}</b></li>
+                <li><b>{{ showUserName(item) }}</b></li>
             }
         </ul>
     </div>
@@ -15,13 +15,22 @@
         <span>Subtasks:</span>
         <ul>
             @for (subtask of urlService.currentTask.subtasks; track $index) {
-                <li><b>{{ subtask.name }} <button (click)="editSubtask(subtask)" mat-flat-button>Edit</button></b></li>
+                <li><b>{{ subtask.name }} <button (click)="editSubtask(subtask, $event)" mat-flat-button>Edit</button></b></li>
             }
         </ul>
     </div>
+    @if (showEditWindow) {
+        <div style="display: flex;">
+            <mat-form-field class="example-full-width">
+                <mat-label>Favorite food</mat-label>
+                <input matInput placeholder="Ex. Pizza" value="Sushi" [(ngModel)]="subtaskValue" (click)="editSubtaskInout( $event)">
+            </mat-form-field>
+            <button (click)="saveEditSubtask($event)" mat-flat-button>Save</button>
+        </div>
+    }
     <div>
-        <button (click)="deleteSubtask()" mat-flat-button>Delete</button>
-        <button (click)="closeSubtask()" mat-flat-button>Close</button>
+        <button (click)="deleteSubtask($event)" mat-flat-button>Delete</button>
+        <button (click)="closeSubtask($event)" mat-flat-button>Close</button>
     </div>
   </mat-card-content>
 </mat-card>

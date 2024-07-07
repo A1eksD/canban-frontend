@@ -127,5 +127,8 @@ app-card-details{
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    app-show-card-details{
+        z-index: 10 !important;
+    }
 }
 

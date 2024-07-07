@@ -15,14 +15,11 @@ export class UrlService {
   currentTask: any = [];
   showTaskBoolean: boolean = false;
 
-  constructor(private http: HttpClient) {
-    // setInterval(() => {
-    //   console.log('ddddddddddd',this.allTasks);
-    // }, 2000);
-  }
+
+
+  constructor(private http: HttpClient) {}
   
   loginWithUsernameAndPassword(userName:string, password:string){
-    
     const url = 'http://127.0.0.1:8000/login/';
     const body = {
       username: userName,
@@ -34,7 +31,6 @@ export class UrlService {
 
   async addTaskIntoBackend(task: Todo){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // const body = JSON.stringify(task);
     const url = 'http://127.0.0.1:8000/api/tasks/';
     await lastValueFrom(this.http.post(url, task, { headers }));
   }
@@ -42,7 +38,6 @@ export class UrlService {
 
   async addSubtaskIntoBackend(subtask: any){
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    // const body = JSON.stringify(subtask);
     const url = 'http://127.0.0.1:8000/api/subtasks/';
     await lastValueFrom(this.http.post(url, subtask, { headers }));
   }
@@ -56,14 +51,6 @@ export class UrlService {
     this.userNames = jsonData;
   }
   
-
-  // async fetchTasks(){
-  //   const url = 'http://127.0.0.1:8000/api/tasks/';
-  //   const response = await fetch(url);
-  //   const jsonData = await response.json();
-  //   this.allTasks = jsonData;
-  //   console.log(this.allTasks);
-  // }
 
   fetchTasks(): Observable<Todo[]> {
     const url = 'http://127.0.0.1:8000/api/tasks/';
@@ -81,5 +68,22 @@ export class UrlService {
       assigned_users: task.assigned_users,
     };
     return lastValueFrom(this.http.put(url, body));
+  }
+
+  
+  updateSubtaskValue( currentSubtask: any, subtaskValue: string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `http://127.0.0.1:8000/api/subtasks/${currentSubtask.id}/`;
+    const body = { 
+      name: subtaskValue
+    };
+    return lastValueFrom(this.http.put(url, body, { headers }));
+  }
+
+
+  deleteSubtask(subtaskId: number) {
+    const url = `http://127.0.0.1:8000/api/tasks/${subtaskId}/`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return lastValueFrom(this.http.delete(url, { headers }));
   }
 }

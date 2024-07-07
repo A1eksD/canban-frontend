@@ -43,8 +43,6 @@ export class ShowTodosComponent {
   getToDOCategory() {
     this.toDoCategory = this.UrlService.allTasks.filter((t) => t.category === "todo");
     if (this.toDoCategory.length > 0) {
-      console.log(this.toDoCategory);
-      
       return true;
     }
     return false;
@@ -113,28 +111,6 @@ export class ShowTodosComponent {
     this.openAddNewTaskWindow = vlaue;
   }
 
-  filterExistingTask() {
-    const filteredTasks = this.UrlService.allTasks.filter(task =>
-      task.title.replace(/\s/g, '').toLowerCase().includes(this.filterTaskValue.replace(/\s/g, '').toLowerCase())
-    );
-
-    if (filteredTasks.length === 1) {
-      this.toDoCategory = [];
-      this.inProgressCategory = [];
-      this.awaitFeedbackCategory  = [];
-      this.doneCategory = [];
-      const singleTask = filteredTasks;
-      this.updateCategoryLists(singleTask);
-      return true;
-    } else {
-      this.toDoCategory = this.UrlService.allTasks.filter(t => t.category === "todo");
-      this.inProgressCategory = this.UrlService.allTasks.filter(t => t.category === "inProgress");
-      this.awaitFeedbackCategory = this.UrlService.allTasks.filter(t => t.category === "awaitFeedback");
-      this.doneCategory = this.UrlService.allTasks.filter(t => t.category === "done"); 
-      return false;
-    }
-  }
-
 
   updateCategoryLists(tasks : any) {
     this.toDoCategory = tasks.filter((task: any) => task.category === 'todo');
@@ -159,6 +135,7 @@ export class ShowTodosComponent {
   showTask(item: Todo){
     this.UrlService.showTaskBoolean = !this.UrlService.showTaskBoolean;
     this.UrlService.currentTask = item;
+    this.UrlService.startFetchData();
   }
 
   closeTask(){
