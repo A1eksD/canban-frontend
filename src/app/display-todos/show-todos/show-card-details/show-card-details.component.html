@@ -1,0 +1,27 @@
+<mat-card appearance="outlined">
+  <mat-card-content>
+    <span>Title: <b>{{ urlService.currentTask.title }}</b></span>
+    <span>Descritopn: <b>{{ urlService.currentTask.description }}</b></span>
+    <span>Priority: <b>{{ urlService.currentTask.priority }} </b></span>
+    <div class="subtasksBox">
+        <span>Assigned Users:</span>
+        <ul>
+            @for (item of urlService.currentTask.assigned_users; track $index) {
+                <li><b>{{ item }}</b></li>
+            }
+        </ul>
+    </div>
+    <div class="subtasksBox">
+        <span>Subtasks:</span>
+        <ul>
+            @for (subtask of urlService.currentTask.subtasks; track $index) {
+                <li><b>{{ subtask.name }} <button (click)="editSubtask(subtask)" mat-flat-button>Edit</button></b></li>
+            }
+        </ul>
+    </div>
+    <div>
+        <button (click)="deleteSubtask()" mat-flat-button>Delete</button>
+        <button (click)="closeSubtask()" mat-flat-button>Close</button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -4,11 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { OnDragHighlightDirective } from '../../directives/on-drag-highlight.directive';
 import { CommonModule } from '@angular/common';
 import { CardDetailsComponent } from './card-details/card-details.component';
+import { Todo } from '../../interfece/todo';
+import { ShowCardDetailsComponent } from './show-card-details/show-card-details.component';
 
 @Component({
   selector: 'app-show-todos',
   standalone: true,
-  imports: [CommonModule, OnDragHighlightDirective, FormsModule, CardDetailsComponent],
+  imports: [CommonModule, OnDragHighlightDirective, FormsModule, CardDetailsComponent, ShowCardDetailsComponent],
   templateUrl: './show-todos.component.html',
   styleUrl: './show-todos.component.scss'
 })
@@ -25,6 +27,7 @@ export class ShowTodosComponent {
   CategorY: string= '';
   filteredTasks: any[] = [];
 
+
   constructor(public UrlService: UrlService){}
 
   ngOnInit() {
@@ -40,7 +43,7 @@ export class ShowTodosComponent {
   getToDOCategory() {
     this.toDoCategory = this.UrlService.allTasks.filter((t) => t.category === "todo");
     if (this.toDoCategory.length > 0) {
-      console.log('toDoCategory',this.toDoCategory);
+      console.log(this.toDoCategory);
       
       return true;
     }
@@ -50,7 +53,6 @@ export class ShowTodosComponent {
   getInProgressCategory() {
     this.inProgressCategory = this.UrlService.allTasks.filter((t) => t.category === "inProgress");
     if (this.inProgressCategory.length > 0) {
-      console.log('inProgressCategory',this.inProgressCategory);
       return true;
     }
     return false;
@@ -135,7 +137,7 @@ export class ShowTodosComponent {
 
 
   updateCategoryLists(tasks : any) {
-    this.toDoCategory = tasks.filter((task: any) => task.category === 'toDo');
+    this.toDoCategory = tasks.filter((task: any) => task.category === 'todo');
     this.inProgressCategory = tasks.filter((task: any) => task.category === 'inProgress');
     this.awaitFeedbackCategory = tasks.filter((task: any) => task.category === 'awaitFeedback');
     this.doneCategory = tasks.filter((task: any) => task.category === 'done');
@@ -151,5 +153,15 @@ export class ShowTodosComponent {
       return "high";
     }
     return '';
+  }
+
+
+  showTask(item: Todo){
+    this.UrlService.showTaskBoolean = !this.UrlService.showTaskBoolean;
+    this.UrlService.currentTask = item;
+  }
+
+  closeTask(){
+    this.UrlService.showTaskBoolean = !this.UrlService.showTaskBoolean;
   }
 }

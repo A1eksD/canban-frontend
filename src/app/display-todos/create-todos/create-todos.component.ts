@@ -40,6 +40,7 @@ export class CreateTodosComponent {
   subtasksValue: string = '';
   subtasks: any[] = [];
   assigned_users : fetchedUser[]= [];
+  chackedUserIDs: number[] = [];
 
   constructor(public UrlService: UrlService) {}
 
@@ -85,7 +86,7 @@ export class CreateTodosComponent {
       priority: this.priority,
       creator: +localStorage.getItem('userID')!,
       subtasks: this.subtasks || [],
-      assigned_users: this.assigned_users || [],
+      assigned_users: this.assigned_users.map(user => user.id) || [],
       category: 'todo'
     };
     try {
@@ -139,6 +140,7 @@ export class CreateTodosComponent {
     const isUserChacked = this.assigned_users.some(u => u.id === user.id);
     if(!isUserChacked){
       this.assigned_users.push(user);
+      // this.chackedUserIDs.push(user.id);
     }
   }
 

@@ -12,7 +12,8 @@ export class UrlService {
   userNames: any[] = [];
   currentLoggedInUserID: number = 0;
   allTasks : Todo[] = [];
-
+  currentTask: any = [];
+  showTaskBoolean: boolean = false;
 
   constructor(private http: HttpClient) {
     // setInterval(() => {

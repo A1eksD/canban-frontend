@@ -6,7 +6,7 @@ export interface Todo {
     description: string,
     creator: number,
     priority: number,
-    assigned_users: fetchedUser[] | [];
+    assigned_users: number[] | [];
     subtasks: string[] | [];
     category: string
 }

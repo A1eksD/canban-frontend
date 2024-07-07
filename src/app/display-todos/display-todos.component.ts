@@ -7,17 +7,18 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, throwError } from 'rxjs';
 import { UrlService } from '../service/urls-service.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-display-todos',
   standalone: true,
-  imports: [CreateTodosComponent, ShowTodosComponent, FormsModule, CommonModule ],
+  imports: [CreateTodosComponent, ShowTodosComponent, FormsModule, CommonModule, MatButtonModule],
   templateUrl: './display-todos.component.html',
   styleUrl: './display-todos.component.scss'
 })
 export class DisplayTodosComponent {
 
-  constructor(private http: HttpClient, private router: Router, private urlService: UrlService){}
+  constructor(private http: HttpClient, private router: Router){}
 
   
   logout(){
