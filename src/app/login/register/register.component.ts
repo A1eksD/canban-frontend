@@ -66,6 +66,7 @@ export class RegisterComponent {
           let response = (await lastValueFrom(this.http.post(url, body, { headers })))as UserToken;
           if (response) {
             localStorage.setItem('token', response.token);
+            localStorage.setItem('userID', response.user_id.toString());
           }
           this.urlService.startFetchData();
           this.router.navigateByUrl('/todos');
