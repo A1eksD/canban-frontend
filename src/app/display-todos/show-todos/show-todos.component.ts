@@ -140,5 +140,6 @@ export class ShowTodosComponent {
 
   closeTask(){
     this.UrlService.showTaskBoolean = !this.UrlService.showTaskBoolean;
+    location.reload();
   }
 }

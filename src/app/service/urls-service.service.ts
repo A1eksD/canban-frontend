@@ -1,8 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, lastValueFrom, Observable } from 'rxjs';
+import { lastValueFrom, Observable } from 'rxjs';
 import { Todo } from '../interfece/todo';
-import { UserToken } from '../interfece/user-token';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +13,13 @@ export class UrlService {
   allTasks : Todo[] = [];
   currentTask: any = [];
   showTaskBoolean: boolean = false;
+  deleteTaskValue: boolean = false;
 
 
-
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
   
+
   loginWithUsernameAndPassword(userName:string, password:string){
     const url = 'http://127.0.0.1:8000/login/';
     const body = {
@@ -29,8 +30,12 @@ export class UrlService {
   }
 
 
-  async addTaskIntoBackend(task: Todo){
-    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  async addTaskIntoBackend(task: Todo) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    });
     const url = 'http://127.0.0.1:8000/api/tasks/';
     await lastValueFrom(this.http.post(url, task, { headers }));
   }
@@ -49,6 +54,7 @@ export class UrlService {
     const response = await fetch(url);
     const jsonData = await response.json();
     this.userNames = jsonData;
+    return jsonData
   }
   
 
@@ -59,6 +65,7 @@ export class UrlService {
 
 
   updateTaskCategors( task: Todo, id: number , category: string){
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `http://127.0.0.1:8000/api/tasks/${id}/`;
     const body = { 
       title: task.title,
@@ -67,7 +74,7 @@ export class UrlService {
       subtasks: task.subtasks,
       assigned_users: task.assigned_users,
     };
-    return lastValueFrom(this.http.put(url, body));
+    return lastValueFrom(this.http.put(url, body, { headers }));
   }
 
   
@@ -84,6 +91,6 @@ export class UrlService {
   deleteSubtask(subtaskId: number) {
     const url = `http://127.0.0.1:8000/api/tasks/${subtaskId}/`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return lastValueFrom(this.http.delete(url, { headers }));
+    return this.http.delete(url, { headers });
   }
 }

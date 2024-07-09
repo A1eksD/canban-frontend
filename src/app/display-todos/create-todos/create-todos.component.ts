@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -29,7 +29,9 @@ import { fetchedUser } from '../../interfece/fetchedUser';
   templateUrl: './create-todos.component.html',
   styleUrl: './create-todos.component.scss',
 })
-export class CreateTodosComponent {
+
+
+export class CreateTodosComponent implements OnInit{
   hideSingleSelectionIndicator = signal(false);
   hideMultipleSelectionIndicator = signal(false);
   created: string = '';
@@ -44,7 +46,11 @@ export class CreateTodosComponent {
 
   constructor(public UrlService: UrlService) {}
 
-
+  ngOnInit() {
+    this.UrlService.startFetchData().then(jsonData => {
+        this.UrlService.userNames = jsonData;
+    });
+}
   toggleSingleSelectionIndicator() {
     this.hideSingleSelectionIndicator.update((value) => !value);
   }
@@ -91,7 +97,7 @@ export class CreateTodosComponent {
     };
     try {
       await this.UrlService.addTaskIntoBackend(task);
-      console.log('Task created successful');
+      location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -140,12 +146,18 @@ export class CreateTodosComponent {
     const isUserChacked = this.assigned_users.some(u => u.id === user.id);
     if(!isUserChacked){
       this.assigned_users.push(user);
-      // this.chackedUserIDs.push(user.id);
     }
   }
 
   
   deleteSelectedUser(index:number){
     this.assigned_users.splice(index, 1);
+  }
+
+
+  
+  showUsers(){
+    console.log(this.UrlService.userNames);
+    
   }
 }

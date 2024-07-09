@@ -1,4 +1,4 @@
-<mat-card appearance="outlined">
+<mat-card appearance="outlined" (click)="stopEvent($event)">
   <mat-card-content>
     <span>Title: <b>{{ urlService.currentTask.title }}</b></span>
     <span>Descritopn: <b>{{ urlService.currentTask.description }}</b></span>
@@ -15,7 +15,7 @@
         <span>Subtasks:</span>
         <ul>
             @for (subtask of urlService.currentTask.subtasks; track $index) {
-                <li><b>{{ subtask.name }} <button (click)="editSubtask(subtask, $event)" mat-flat-button>Edit</button></b></li>
+                <li><b>{{ subtask.name }} <button (click)="editSubtask(subtask, $event)" mat-flat-button style="color: red;">Edit</button></b></li>
             }
         </ul>
     </div>
@@ -28,9 +28,14 @@
             <button (click)="saveEditSubtask($event)" mat-flat-button>Save</button>
         </div>
     }
+    <div>Creator: <b>{{ showUserName(urlService.currentTask.creator) }}</b></div>
     <div>
         <button (click)="deleteSubtask($event)" mat-flat-button>Delete</button>
         <button (click)="closeSubtask($event)" mat-flat-button>Close</button>
     </div>
+
+    @if (deleteValue) {
+        <span style="color: red;">Olny the creator can delete this task!</span>
+    }
   </mat-card-content>
 </mat-card>

@@ -30,7 +30,7 @@
             }
         </ul>
     </div>
-    <mat-form-field>
+    <mat-form-field (click)="showUsers()">
         <mat-label>Select Users</mat-label>
         <mat-select>
             @for (user of UrlService.userNames; track $index) {

@@ -33,7 +33,6 @@ export class DisplayTodosComponent {
     .subscribe(() => {
       localStorage.clear();
       this.router.navigate(['/login']);
-      console.log('Successfully logged out');
     });
   }
 }
